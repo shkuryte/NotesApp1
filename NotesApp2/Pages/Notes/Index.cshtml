@@ -1,0 +1,58 @@
+﻿@page
+@model NotesApp2.Pages.Notes.IndexModel
+@{
+}
+
+<div class="container row">
+    <div class="col-10">    
+        <h1 class="display-4">Mano užrašai</h1>
+    </div>
+    <div class="col-2">
+        <a asp-page="Create" class="btn btn-info">Sukurti užrašą</a>
+    </div>
+</div>
+
+<div class="col-12 border p-2 mt-2">
+
+    <form method="post">
+            @if (Model.Notes.Count > 0)
+            {
+                <table class="table table-striped border-1">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="Notes.FirstOrDefault().Title">Pavadinimas</label>
+                        </th>
+                        <th>
+                            <label asp-for="Notes.FirstOrDefault().Content">Turinys</label>
+                        </th>
+                        
+                        <th></th>
+
+                    </tr>
+                    @foreach (var note in Model.Notes)
+                    {
+                        <tr>
+                            <td>
+                                @note.Title
+                            </td>
+                            <td>
+                                @note.Content
+                            </td>
+                            
+
+                            <td>
+                                <button asp-page-handler="Delete" asp-route-id="@note.Id" onclick="return confirm('Tikrai norite ištrinti?')" class="btn btn-danger btn-sm">Ištrinti</button>
+                                <a asp-page="Edit" asp-route-id="@note.Id" class="btn btn-success btn-sm">Redaguoti</a>
+                                <a asp-page="Assign" asp-route-id="@note.Id" class="btn btn-success btn-sm">Priskirti kategorijai</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>Užrašų nėra</p>
+            }
+        </form>
+
+</div>
